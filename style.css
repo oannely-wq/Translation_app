@@ -1,14 +1,14 @@
 :root {
-    --bg-color: #f0fdf4;
-    --card-bg: #ffffff;
-    --text-main: #064e3b;
-    --text-muted: #166534;
-    --primary: #15803d;
-    --primary-hover: #166534;
+    --bg-color: #000000;
+    --card-bg: #111111;
+    --text-main: #ffffff;
+    --text-muted: #fed7aa;
+    --primary: #ea580c;
+    --primary-hover: #c2410c;
     --danger: #ef4444;
     --danger-hover: #dc2626;
     --success: #22c55e;
-    --border: #bbf7d0;
+    --border: #333333;
     --font-family: 'Inter', sans-serif;
 }
 
@@ -48,8 +48,9 @@ h1 {
     font-size: 2.5rem;
     font-weight: 600;
     margin-bottom: 10px;
-    background: linear-gradient(to right, #22c55e, #059669);
+    background: linear-gradient(to right, #f97316, #ea580c);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
