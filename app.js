@@ -14,12 +14,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const statusDot = document.getElementById('status-dot');
     const statusText = document.getElementById('status-text');
 
+    const videoContainer = document.getElementById('video-container');
+    const videoFeed = document.getElementById('video-feed');
+    const subtitlesDiv = document.getElementById('subtitles');
+
     // App State
     let mode = 'en-fi'; // 'en-fi' or 'fi-en'
     let isListening = false;
     let recognition = null;
     let fullOriginalText = "";
     let fullTranslatedText = "";
+    let mediaStream = null;
 
     // Check for Web Speech API support
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -58,16 +63,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    toggleListenBtn.addEventListener('click', () => {
+    toggleListenBtn.addEventListener('click', async () => {
         if (!isListening) {
             try {
-                recognition.start();
+                // Request camera access
+                if (!mediaStream) {
+                    try {
+                        mediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+                        videoFeed.srcObject = mediaStream;
+                        videoContainer.classList.remove('hidden');
+                    } catch (err) {
+                        console.error("Camera access denied or failed", err);
+                        alert("Camera access is required for live video input.");
+                        return; // Stop if camera fails
+                    }
+                }
+                setTimeout(() => { recognition.start(); }, 500); // slight delay to let camera start
             } catch (e) {
                 console.error("Recognition already started");
             }
         } else {
             recognition.stop();
             isListening = false;
+            
+            // Stop camera stream
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+                mediaStream = null;
+                videoFeed.srcObject = null;
+                videoContainer.classList.add('hidden');
+                subtitlesDiv.innerHTML = "";
+            }
+            
             updateUIState();
         }
     });
@@ -80,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
             originalTextDiv.classList.remove("placeholder");
             translatedTextDiv.innerHTML = "";
             translatedTextDiv.classList.remove("placeholder");
+            subtitlesDiv.innerHTML = "";
         }
     };
 
@@ -104,9 +132,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const translatedPhrase = await translateText(finalTranscript, mode);
             fullTranslatedText += translatedPhrase + " ";
             translatedTextDiv.innerHTML = fullTranslatedText;
+            
+            // Update Subtitles with the latest translated phrase and interim transcript if any
+            subtitlesDiv.innerHTML = translatedPhrase + (interimTranscript ? ` <span style="opacity:0.7; font-size: 0.8em;">...</span>` : '');
+            
             statusText.textContent = "Listening...";
         } else {
             originalTextDiv.innerHTML = fullOriginalText + `<span class="interim-text">${interimTranscript}</span>`;
+            // Show the interim text directly as subtitles if it's the only thing happening right now
+            if (interimTranscript) {
+               subtitlesDiv.innerHTML = interimTranscript;
+            }
         }
     };
 

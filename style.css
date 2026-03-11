@@ -1,14 +1,14 @@
 :root {
-    --bg-color: #0f172a;
-    --card-bg: #1e293b;
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-    --primary: #3b82f6;
-    --primary-hover: #2563eb;
+    --bg-color: #f0fdf4;
+    --card-bg: #ffffff;
+    --text-main: #064e3b;
+    --text-muted: #166534;
+    --primary: #15803d;
+    --primary-hover: #166534;
     --danger: #ef4444;
     --danger-hover: #dc2626;
     --success: #22c55e;
-    --border: #334155;
+    --border: #bbf7d0;
     --font-family: 'Inter', sans-serif;
 }
 
@@ -48,7 +48,7 @@ h1 {
     font-size: 2.5rem;
     font-weight: 600;
     margin-bottom: 10px;
-    background: linear-gradient(to right, #60a5fa, #a78bfa);
+    background: linear-gradient(to right, #22c55e, #059669);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -155,6 +155,51 @@ header p {
     }
 }
 
+.video-container {
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto 30px auto;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: #000;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.video-container.hidden {
+    display: none;
+}
+
+#video-feed {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.subtitles {
+    position: absolute;
+    bottom: 20px;
+    left: 5%;
+    right: 5%;
+    text-align: center;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), -2px -2px 4px rgba(0, 0, 0, 0.8), 2px -2px 4px rgba(0, 0, 0, 0.8), -2px 2px 4px rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px 15px;
+    border-radius: 8px;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .translation-boxes {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -195,8 +240,9 @@ header p {
 }
 
 .text-content.placeholder {
-    color: #475569;
+    color: var(--text-muted);
     font-style: italic;
+    opacity: 0.7;
 }
 
 .interim-text {

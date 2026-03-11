@@ -1,29 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Live Voice Translator - Real-time translation between English and Finnish">
-    <title>Live Voice Translator</title>
+    <title>Finnish-English-Finnish Translator</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <div class="container">
         <header>
-            <h1>Live Voice Translator</h1>
+            <h1>Finnish-English-Finnish Translator</h1>
             <p>Speak naturally. We'll handle the translation.</p>
         </header>
 
         <main>
             <div class="controls">
                 <button id="toggle-lang" class="btn primary">
-                    <span class="lang-src">English</span> 
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                    <span class="lang-src">English</span>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                    </svg>
                     <span class="lang-dst">Finnish</span>
                 </button>
                 <button id="toggle-listen" class="btn active-listen">
-                    <svg class="icon-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2m7 11v-4m-4 4h8"/></svg>
+                    <svg class="icon-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2m7 11v-4m-4 4h8" />
+                    </svg>
                     <span>Start Listening</span>
                 </button>
             </div>
@@ -33,12 +40,17 @@
                 <span id="status-text">Ready to listen</span>
             </div>
 
+            <div class="video-container hidden" id="video-container">
+                <video id="video-feed" autoplay playsinline muted></video>
+                <div id="subtitles" class="subtitles"></div>
+            </div>
+
             <div class="translation-boxes">
                 <div class="box original">
                     <h2>Original (<span id="orig-lang-lbl">English</span>)</h2>
                     <div id="original-text" class="text-content placeholder">Your speech will appear here...</div>
                 </div>
-                
+
                 <div class="box translated">
                     <h2>Translated (<span id="trans-lang-lbl">Finnish</span>)</h2>
                     <div id="translated-text" class="text-content placeholder">Translation will appear here...</div>
@@ -46,7 +58,8 @@
             </div>
         </main>
     </div>
-    
+
     <script src="app.js"></script>
 </body>
+
 </html>
